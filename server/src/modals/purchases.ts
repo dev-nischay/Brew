@@ -34,3 +34,5 @@ const purchaseSchema = new mongoose.Schema({
     },
   ],
 });
+
+export const Purchase = mongoose.model("purchase", purchaseSchema);
