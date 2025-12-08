@@ -7,8 +7,8 @@ export const error = async (
   next: NextFunction
 ) => {
   if (err instanceof AppError) {
-    const statusCode = 500 | err.statusCode;
-
+    const statusCode = err.statusCode || 500;
+    console.log(err);
     return res.status(statusCode).json({
       status: false,
       message: err.message || "Someting Went Wrong",
@@ -16,6 +16,7 @@ export const error = async (
   }
 
   if (err instanceof Error) {
+    console.log(err);
     return res.status(500).json({
       status: false,
       priority: "High",

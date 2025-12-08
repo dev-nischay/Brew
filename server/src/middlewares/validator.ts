@@ -19,10 +19,10 @@ export const Validate = (schema: ZodType, source: Source = "body") => {
 
       if (source === Origin.body) req[TargetMap.body] = parsedData.data;
       else if (source === Origin.params)
-        req[TargetMap.params] = parsedData.data;
+        req[TargetMap.params] = parsedData.data as {};
       else req[TargetMap.query] = parsedData.data;
 
-      console.log("Validation competed");
+      console.log("Validation completed");
       next();
     } catch (error) {
       console.error(error);

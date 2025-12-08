@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import type { Payload } from "../types/constants.js";
 import AppError from "../utils/AppError.js";
-const secret = process.env.JWT_TOKEN;
+import { HttpStatus } from "../types/enums.js";
+const secret = process.env.JWT_SECRET;
 const Verify = async (token: string) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secret!, (err, payload) => {
@@ -34,6 +35,11 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     console.log(error);
-    return next(new AppError("Something Went Wrong", 500));
+    return next(
+      new AppError(
+        "Jwt not found kindly login and try again ",
+        HttpStatus.BadRequest
+      )
+    );
   }
 };
