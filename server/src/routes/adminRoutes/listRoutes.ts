@@ -14,12 +14,6 @@ import {
   updateProduct,
 } from "../../controllers/adminAcess/listController.js";
 
-import { auth } from "../../middlewares/auth.js";
-import { isAdmin } from "../../utils/isAdmin.js";
-listItemsRouter.get("/", asyncWrapper(showProducts)); // can be accessed by everyone
-
-listItemsRouter.use("/", auth, isAdmin);
-
 listItemsRouter.put(
   "/:productId",
   Validate(productIdSchema, "params"),
@@ -38,3 +32,4 @@ listItemsRouter.post(
   Validate(createProductSchema),
   asyncWrapper(listProduct)
 );
+listItemsRouter.get("/", asyncWrapper(showProducts));

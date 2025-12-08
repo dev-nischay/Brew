@@ -13,4 +13,4 @@ import { Validate } from "../../middlewares/validator.js";
 adminRouter.post("/signup", Validate(signupSchema), asyncWrapper(adminSignup));
 adminRouter.post("/signin", Validate(signinSchema), asyncWrapper(adminSignin));
 
-adminRouter.use("/list", listItemsRouter);
+adminRouter.use("/list", auth, isAdmin, listItemsRouter);
