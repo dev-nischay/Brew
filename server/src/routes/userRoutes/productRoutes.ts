@@ -2,11 +2,33 @@ import { Router } from "express";
 export const productRouter = Router();
 import asyncWrapper from "../../utils/asyncWrapper.js";
 import { auth } from "../../middlewares/auth.js";
+import {
+  availableProducts,
+  purchaseHistory,
+  purchaseProduct,
+  reviewProduct,
+} from "../../controllers/userAcess/productController.js";
+import {
+  productIdSchema,
+  purchaseProductSchema,
+  reviewProductSchema,
+} from "../../validation/productSchema.js";
+import { Validate } from "../../middlewares/validator.js";
+productRouter.get("/", asyncWrapper(availableProducts)); // can be hit by anyone
 
-// productRouter.get("/",asyncWrapper()) see all available products note- can be accessed by anyone
+productRouter.use(auth);
 
-productRouter.use(auth); // check this
+productRouter.post(
+  "/purchase",
+  Validate(purchaseProductSchema),
+  asyncWrapper(purchaseProduct)
+);
 
-// productRouter.post("/purchase",asyncWrapper()) purchase a product
-// productRouter.post("/productId/raing",asyncWrapper()) give a rating to a product
-// productRouter.post("/productId/review",asyncWrapper()) give a review (text-based)
+productRouter.post(
+  "/:productId/review",
+  Validate(productIdSchema, "params"),
+  Validate(reviewProductSchema),
+  asyncWrapper(reviewProduct)
+);
+
+productRouter.get("/history", asyncWrapper(purchaseHistory));
