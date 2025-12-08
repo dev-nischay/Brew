@@ -32,7 +32,7 @@ export const adminSignin = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username } = req.validatedBody as loginBody;
+  const { username, password } = req.validatedBody as loginBody;
 
   const isAdmin = await Admin.findOne({ username });
 
@@ -43,6 +43,11 @@ export const adminSignin = async (
         HttpStatus.NotFound
       )
     );
+
+  const compare = bcrypt.compare(password, isAdmin.password);
+
+  if (!compare)
+    return new AppError("Incorrect Password", HttpStatus.BadRequest);
 
   const token = jwt.sign(
     {

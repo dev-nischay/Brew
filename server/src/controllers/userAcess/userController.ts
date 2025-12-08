@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import { Product } from "../../modals/product.js";
 
 export const userSignup = async (
-  req: Request,
+  req: Request<loginBody>,
   res: Response,
   next: NextFunction
 ) => {
@@ -33,7 +33,7 @@ export const userSignin = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username } = req.validatedBody as loginBody;
+  const { username, password } = req.validatedBody as loginBody;
 
   const isUser = await User.findOne({ username });
 
@@ -44,6 +44,11 @@ export const userSignin = async (
         HttpStatus.NotFound
       )
     );
+
+  const compare = bcrypt.compare(password, isUser.password);
+
+  if (!compare)
+    return new AppError("Incorrect Password", HttpStatus.BadRequest);
 
   const token = jwt.sign(
     {

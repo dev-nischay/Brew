@@ -21,7 +21,7 @@ export const availableProducts = async (
       path: "seller",
       select: "-_id -__v -password",
     })
-    .select("-__v");
+    .select("-__v -images._id");
 
   console.log(products);
 
@@ -105,7 +105,7 @@ export const purchaseHistory = async (
       select: " -__v",
       populate: { path: "seller", select: "username -_id" },
     })
-    .select("-__v totalAmount items -_id");
+    .select("-__v totalAmount items -_id -purchasedAt -images._id");
 
   if (!purchases)
     return next(new AppError("no purchases to display", HttpStatus.BadRequest));
