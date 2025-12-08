@@ -10,7 +10,6 @@ const purchaseSchema = new mongoose.Schema({
   currency: {
     type: String,
     default: "INR",
-    required: true,
   },
 
   purchasedAt: {
@@ -27,7 +26,7 @@ const purchaseSchema = new mongoose.Schema({
   items: [
     {
       productId: {
-        types: Types.ObjectId,
+        type: Types.ObjectId,
         required: true,
         ref: "product",
       },

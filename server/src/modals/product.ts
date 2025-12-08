@@ -19,13 +19,6 @@ const productSchema = new mongoose.Schema({
   },
   images: [{ url: String }],
 
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    default: 0,
-  },
-
   seller: {
     type: Types.ObjectId,
     ref: "admin",
