@@ -1,8 +1,40 @@
 import { Router } from "express";
 export const listItemsRouter = Router();
 import asyncWrapper from "../../utils/asyncWrapper.js";
+import { Validate } from "../../middlewares/validator.js";
+import {
+  createProductSchema,
+  productIdSchema,
+  updateProductSchema,
+} from "../../validation/productSchema.js";
+import {
+  listProduct,
+  delistProduct,
+  showProducts,
+  updateProduct,
+} from "../../controllers/adminAcess/listController.js";
 
-// listItemsRouter.post("/",asyncWrapper()) list a product
-// listItemsRouter.get("/",asyncWrapper()) get all listed products
-// listItemsRouter.delete("/productId",asyncWrapper()) de-list a product
-// listItemsRouter.put("/productId",asyncWrapper()) update product creds
+import { auth } from "../../middlewares/auth.js";
+import { isAdmin } from "../../utils/isAdmin.js";
+listItemsRouter.get("/", asyncWrapper(showProducts)); // can be accessed by everyone
+
+listItemsRouter.use("/", auth, isAdmin);
+
+listItemsRouter.put(
+  "/:productId",
+  Validate(productIdSchema, "params"),
+  Validate(updateProductSchema),
+  asyncWrapper(updateProduct)
+);
+
+listItemsRouter.delete(
+  "/:productId",
+  Validate(productIdSchema, "params"),
+  asyncWrapper(delistProduct)
+);
+
+listItemsRouter.post(
+  "/",
+  Validate(createProductSchema),
+  asyncWrapper(listProduct)
+);
