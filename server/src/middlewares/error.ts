@@ -8,7 +8,7 @@ export const error = async (
 ) => {
   if (err instanceof AppError) {
     const statusCode = err.statusCode || 500;
-    console.log(err);
+
     return res.status(statusCode).json({
       status: false,
       message: err.message || "Someting Went Wrong",

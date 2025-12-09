@@ -4,7 +4,6 @@ import type {
   productUpdateBody,
 } from "../../validation/productSchema.js";
 import { Product } from "../../modals/product.js";
-import { Admin } from "../../modals/admin.js";
 import AppError from "../../utils/AppError.js";
 import { HttpStatus } from "../../types/enums.js";
 
@@ -24,7 +23,7 @@ export const listProduct = async (
 
   res.json({
     status: true,
-    message: "Product listed ",
+    message: "Product listed",
   });
 };
 
@@ -85,12 +84,10 @@ export const showProducts = async (
     })
     .select("-__v");
 
-  console.log(products);
-
   if (products.length === 0)
     next(
       new AppError(
-        "Sorry ! no produts listed at this moment please come back soon",
+        "Sorry ! no produts listed at this moment please come back later",
         HttpStatus.NotFound
       )
     );

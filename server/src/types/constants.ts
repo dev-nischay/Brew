@@ -1,6 +1,6 @@
 export type Payload = {
   id: string;
-  role?: "admin" | "user";
+  role?: "Admin" | "User";
 };
 
 export type Source = "body" | "params" | "query";

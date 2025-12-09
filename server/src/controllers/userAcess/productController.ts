@@ -3,7 +3,6 @@ import { Product } from "../../modals/product.js";
 import AppError from "../../utils/AppError.js";
 import { HttpStatus } from "../../types/enums.js";
 import type {
-  productBody,
   purchaseBody,
   reviewBody,
 } from "../../validation/productSchema.js";
@@ -28,7 +27,7 @@ export const availableProducts = async (
   if (products.length === 0)
     next(
       new AppError(
-        "Sorry ! no produts listed at this moment please come back soon",
+        "Sorry ! no produts listed at this moment please try again later",
         HttpStatus.NotFound
       )
     );
@@ -87,7 +86,7 @@ export const reviewProduct = async (
 
   res.json({
     status: true,
-    message: "Feeback Sent",
+    message: "Review Sent",
   });
 };
 
@@ -112,7 +111,7 @@ export const purchaseHistory = async (
 
   res.json({
     status: true,
-    message: "Payment History  ",
+    message: "Payment History",
     purchases,
   });
 };
