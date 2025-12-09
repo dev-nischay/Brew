@@ -5,7 +5,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {
     const adminId = req.token?.role;
 
-    if (!adminId) {
+    if (adminId === "User") {
       console.log("Invalid Admin Warning ⚠️");
       return next(
         new AppError(

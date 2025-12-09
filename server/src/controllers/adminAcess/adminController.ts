@@ -44,10 +44,10 @@ export const adminSignin = async (
       )
     );
 
-  const compare = bcrypt.compare(password, isAdmin.password);
+  const compare = await bcrypt.compare(password, isAdmin.password);
 
   if (!compare)
-    return new AppError("Incorrect Password", HttpStatus.BadRequest);
+    return next(new AppError("Incorrect Password", HttpStatus.BadRequest));
 
   const token = jwt.sign(
     {

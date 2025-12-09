@@ -4,9 +4,9 @@ export const connectDb = async () => {
   try {
     if (mongoUrl) {
       await mongoose.connect(mongoUrl as string);
-      console.log("Db connected successfully");
+      console.log("Db connected successfully ✅");
     } else {
-      console.error("Db connection failed");
+      console.error("Db connection failed ❗️");
     }
   } catch (error) {
     console.error(
