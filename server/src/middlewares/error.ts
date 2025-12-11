@@ -11,7 +11,7 @@ export const error = async (
 
     return res.status(statusCode).json({
       status: false,
-      message: err.message || "Someting Went Wrong",
+      error: err.message || "Someting Went Wrong",
     });
   }
 
@@ -20,7 +20,7 @@ export const error = async (
     return res.status(500).json({
       status: false,
       priority: "High",
-      message: err.message,
+      error: err.message,
     });
   }
 };
