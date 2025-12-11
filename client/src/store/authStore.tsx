@@ -6,6 +6,7 @@ type AuthStore = {
   username: string;
   setToken?: (token: string) => void;
   setUsername?: (username: string) => void;
+  logout?: () => void;
 };
 
 export const useAuthStore = create(
@@ -18,6 +19,10 @@ export const useAuthStore = create(
         localStorage.setItem("Authorization", `Bearer ${token}`);
       },
       setUsername: (username: string) => set(() => ({ username })),
+      logout: () => {
+        set(() => ({ token: "", username: "" }));
+        localStorage.clear();
+      },
     }),
     {
       name: "auth-store",
