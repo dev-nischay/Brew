@@ -1,7 +1,10 @@
+import type { Product } from "../components/home/home.types";
+
 export type ApiResponse = {
-  message: string;
+  message?: string;
+  error?: string;
   status: boolean;
-  products?: {};
+  products?: Product[];
   token?: string;
   purchases?: {};
 };
