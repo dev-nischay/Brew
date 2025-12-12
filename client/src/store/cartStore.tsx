@@ -1,15 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import type { CartStore } from "./store.types";
 
-import type { Product } from "../components/home/HomePage";
-
-type CartStore = {
-  counter: number;
-  cart: Product[];
-  addToCart: (product: Product) => void;
-  removeFromCart: (productId: string) => void;
-  clearCart: () => void;
-};
 export const useCartStore = create(
   persist<CartStore>(
     (set) => ({

@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-type AuthStore = {
-  token: string;
-  username: string;
-  setToken?: (token: string) => void;
-  setUsername?: (username: string) => void;
-  logout?: () => void;
-};
+import type { AuthStore } from "./store.types";
 
 export const useAuthStore = create(
   persist<AuthStore>(
