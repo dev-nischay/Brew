@@ -20,5 +20,5 @@ export type CartStore = {
 export type PurchaseStore = {
   purchases: Product[];
   totalAmount: number;
-  setProducts?: (purchasesArr: Product[]) => void;
+  setPurchases?: (purchasesArr: Product[], totalAmount: number) => void;
 };

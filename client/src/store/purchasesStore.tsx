@@ -2,12 +2,12 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { PurchaseStore } from "./store.types";
 
-export const purchaseStore = create(
+export const usePurchaseStore = create(
   persist<PurchaseStore>(
     (set) => ({
       purchases: [],
       totalAmount: 0,
-      setProducts: (purchasesArr) => set({ purchases: purchasesArr }),
+      setPurchases: (purchasesArr) => set({ purchases: purchasesArr }),
     }),
     {
       name: "purchases",
