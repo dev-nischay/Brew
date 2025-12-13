@@ -16,3 +16,9 @@ export type CartStore = {
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
 };
+
+export type PurchaseStore = {
+  purchases: Product[];
+  totalAmount: number;
+  setProducts?: (purchasesArr: Product[]) => void;
+};
