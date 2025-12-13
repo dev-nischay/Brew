@@ -5,36 +5,31 @@ export const Card = ({
   productName,
   price,
   _id,
-  image,
+  images,
   description,
 }: Product) => {
   const addToCart = useCartStore((state) => state.addToCart);
   const [clicked, setClicked] = useState(false);
 
-  const addProduct = (product: any) => {
-    addToCart!(product);
-  };
-
   const handleClick = () => {
-    addProduct({
+    const singleImage = images[0].url;
+    addToCart({
       productName,
       price,
       _id,
       description,
-      fixedImage, // this will be removed after image backend is sorted
+      singleImage, // this will be removed after image backend is sorted
     });
-
+    console.log({ productName, price, _id, description, singleImage });
     setClicked((prev) => !prev);
   };
-
-  const fixedImage = image[0].url;
 
   return (
     <div>
       <div className="w-[20rem] p-3 h-[30rem] bg-background text-foreground rounded-3xl flex flex-col gap-4 ">
         <div className="bg-white h-[18rem]  rounded-3xl">
           <img
-            src={fixedImage}
+            src={images[0].url}
             alt="coffee"
             className="rounded-3xl h-[15rem] w-[6rem] object-fill mx-auto mt-4"
           />
@@ -47,12 +42,12 @@ export const Card = ({
           </div>
           <div>
             <button
-              onClick={() => handleClick}
+              onClick={() => handleClick()}
               className={`px-14 rounded-3xl py-2   hover:bg-[#38220f]/60 transition-all duration-100 flex justify-center tracking-wider ${
-                clicked ? "bg-green-400 " : "bg-coffee-dark"
+                clicked ? "bg-green-600 " : "bg-coffee-dark"
               }`}
             >
-              {clicked ? "✔" : "AddtoCart"}
+              {clicked ? "added" : "AddtoCart"}
             </button>
           </div>
         </div>
