@@ -48,7 +48,7 @@ export default function Payment() {
   return (
     <div className="p-4 md:p-8">
       <div>
-        <h1 className="text-4xl font-bold text-white mt-8 mb-8 md:mt-6 lg:mt-5">
+        <h1 className="text-4xl font-extrabold  tex-black  mt-8 mb-8 md:mt-6 lg:mt-5">
           Shopping Cart
         </h1>
 
@@ -64,15 +64,13 @@ export default function Payment() {
               cartItems.map((product, idx) => (
                 <div
                   key={idx}
-                  className="bg-blue-500 backdrop-blur-sm rounded-2xl p-4 border border-secondary hover:border-gray-700 transition-all"
+                  className="bg-background backdrop-blur-sm rounded-2xl p-4 border border-secondary hover:border-gray-700 transition-all"
                 >
                   <div className="flex gap-4 items-start">
                     {/* Course Image */}
                     <div className="flex-shrink-0">
                       <img
-                        src={
-                          "client/src/assets/delicious-quality-coffee-cup.jpg"
-                        }
+                        src={product.images[0].url}
                         alt={product.productName}
                         className="w-40 h-28 object-contain rounded-lg"
                       />
@@ -90,9 +88,7 @@ export default function Payment() {
                         <button
                           onClick={() => remove(product._id)}
                           className="text-gray-400 hover:text-red-400 transition-colors"
-                        >
-                          {/* <X className="w-5 h-5" /> */}
-                        </button>
+                        ></button>
                       </div>
 
                       <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
@@ -116,11 +112,10 @@ export default function Payment() {
             <div className="sticky top-8">
               {/* Credit Card */}
               <div className="mb-6">
-                <div className="bg-blue-500 rounded-3xl p-6 shadow-2xl border border-gray-600">
+                <div className="bg-coffee-dark rounded-3xl p-6 shadow-2xl border border-gray-600">
                   {/* Card Icons */}
                   <div className="flex justify-between items-start mb-12">
                     <div className="w-10 h-8 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-md opacity-80"></div>
-                    {/* <Wifi className="w-7 h-7 text-gray-400 rotate-90" /> */}
                   </div>
 
                   {/* Card Details */}
@@ -148,7 +143,7 @@ export default function Payment() {
               </div>
 
               {/* Payment Details Card */}
-              <div className="bg-blue-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl border border-gray-700">
+              <div className="bg-coffee-dark backdrop-blur-sm rounded-3xl p-6 shadow-xl border border-gray-700">
                 {/* Line Items */}
                 <div className="space-y-4 mb-4">
                   <div className="flex justify-between items-center">
@@ -189,9 +184,7 @@ export default function Payment() {
                       </span>
                     </p>
                   </div>
-                  <div className="bg-gray-700/50 rounded-2xl p-3">
-                    {/* <ReceiptIndianRupee className="w-7 h-7 text-gray-400" /> */}
-                  </div>
+                  <div className="bg-gray-700/50 rounded-2xl p-3"></div>
                 </div>
 
                 {/* Checkout Button */}
