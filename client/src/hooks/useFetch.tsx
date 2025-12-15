@@ -1,53 +1,31 @@
 import { useState } from "react";
+import type { RequestMethod, ApiResponse, Extras } from "./hooks.types";
+import { useAuthStore } from "../store/authStore";
 
-type ResponseData = {
-  message: string;
-  status: boolean;
-  products?: {};
-  token?: string;
-};
-
-type RequestMethod = "POST" | "PUT" | "GET" | "DELETE";
-
-type fetchProps = {
-  endpoint: string;
-  method?: RequestMethod;
-  body?: {};
-  extras: {
-    requireAuth?: boolean;
-    additionalHeader?: Record<string, string>;
-  };
-};
-
-// pass extras for now make it optional later
-
-// take the token from authstore
-
-export const useFetch = ({
-  endpoint,
-  method = "GET",
-  body,
-  extras: { requireAuth = false, additionalHeader },
-}: fetchProps) => {
-  const [data, setData] = useState<ResponseData | null>(null);
-  const [loading, setLoading] = useState(true);
+export const useFetch = (
+  endpoint: string,
+  method: RequestMethod,
+  extras?: Extras,
+  body?: unknown
+) => {
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
-  const baseUrl = `/api/v1/user/${endpoint}`;
+  const baseUrl = `http://localhost:3000/api/v1/user`;
+  const url = `${baseUrl}/${endpoint}`;
 
   const myHeader = new Headers();
   myHeader.set("Content-Type", "application/json");
 
-  let token; // remove this later
+  const token = useAuthStore((state) => state.token);
 
-  if (requireAuth && token) {
+  if (extras?.requireAuth && token) {
     myHeader.set("Authorization", `Bearer ${token}`);
   }
 
-  if (body && (method === "GET" || "DELETE")) {
+  if (body && (method === "GET" || method === "DELETE")) {
     throw new Error("Body can only be sent with POST or PUT methods");
   }
-
-  //   if (additionalHeader) myHeader.set(additionalHeader); check on this later
 
   const reset = () => {
     setData(null), setLoading(true), setError(null);
@@ -55,24 +33,33 @@ export const useFetch = ({
 
   const request = async () => {
     try {
-      const response = await fetch(`${baseUrl}`, {
+      setLoading(true);
+      const response = await fetch(`${url}`, {
         method,
         headers: myHeader,
-        ...(body && { body: JSON.stringify(body) }),
+        ...(typeof body === "object" && { body: JSON.stringify(body) }),
       });
 
+      const result: ApiResponse = await response.json();
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        const serverErr = (result?.error ?? result?.message) as unknown;
+        const parsedErrors =
+          typeof serverErr === "string"
+            ? stringToArr(serverErr).map((s) => s.trim())
+            : Array.isArray(serverErr)
+            ? serverErr
+            : [String(serverErr)];
+
+        setError(parsedErrors);
+        throw new Error(parsedErrors.join(", ") || "Request failed");
       }
 
-      const result = await response.json();
-
-      setData(result);
+      if (result.message) setData(result);
       return result;
     } catch (error) {
-      console.log(`Fetch error ${error} `);
-      setError(error);
-      return error;
+      const e = error instanceof Error ? error : new Error(String(error));
+      setError(e.message);
+      throw e;
     } finally {
       setLoading(false);
     }
@@ -85,4 +72,8 @@ export const useFetch = ({
     request,
     reset,
   };
+};
+
+const stringToArr = (a: string) => {
+  return a.split(",");
 };

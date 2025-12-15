@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { CartStore } from "./store.types";
-
+import type { Product } from "../components/home/home.types";
 export const useCartStore = create(
   persist<CartStore>(
     (set) => ({
       counter: 0,
       cart: [],
-      addToCart: (product) =>
+      addToCart: (product: Product) =>
         set((state) => ({
           cart: [...state.cart, product],
           counter: state.counter + 1,
