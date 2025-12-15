@@ -6,7 +6,7 @@ import { SignUp } from "./components/auth/SignupPage";
 import SignIn from "./components/auth/SigninPage";
 import { Error } from "./components/error/ErrorPage";
 import { Purchases } from "./components/payment/PurchasesPage";
-import { Payment } from "./components/payment/PaymentPage";
+import Payment from "./components/payment/PaymentPage";
 import { GridsLayout } from "./layouts/GridsLayout";
 function App() {
   return (
@@ -16,9 +16,9 @@ function App() {
           <Route index element={<SignUp />} />
           <Route path="signin" element={<SignIn />} />
         </Route>
-        <Route path="/products" element={<GridsLayout />}>
-          <Route path="home" element={<Home />} />
-          <Route path="payment" element={<Payment />} />
+        <Route path="/home" element={<GridsLayout />}>
+          <Route path="products" element={<Home />} />
+          <Route path="payments" element={<Payment />} />
           <Route path="purchases" element={<Purchases />} />
         </Route>
         <Route path="*" element={<Error />} />

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer base {
+  html,
+  body,
+  #root {
+    font-family: "LXGW WenKai Mono TC", ui-monospace, SFMono-Regular, Menlo,
+      Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  }
+}
