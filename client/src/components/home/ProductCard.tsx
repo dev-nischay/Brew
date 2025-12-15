@@ -18,7 +18,7 @@ export const Card = ({
       price,
       _id,
       description,
-      singleImage, // this will be removed after image backend is sorted
+      images, // this will be removed after image backend is sorted
     });
     console.log({ productName, price, _id, description, singleImage });
     setClicked((prev) => !prev);
@@ -31,7 +31,7 @@ export const Card = ({
           <img
             src={images[0].url}
             alt="coffee"
-            className="rounded-3xl h-[15rem] w-[6rem] object-fill mx-auto mt-4"
+            className="rounded-3xl h-[15rem] w-[6rem] object-cover mx-auto mt-4 "
           />
         </div>
         <div className="text-xl font-semibold pb-6">{productName}</div>
