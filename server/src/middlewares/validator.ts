@@ -27,7 +27,10 @@ export const Validate = (schema: ZodType, source: Source = "body") => {
     } catch (error) {
       console.error(error);
       return next(
-        new AppError("Something went wrong while validating data", 500)
+        new AppError(
+          "Something went wrong while validating data",
+          HttpStatus.InternalServerError
+        )
       );
     }
   };

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const passwordSchema = z
-  .string()
+  .string("Username must be at least 8 characters long")
   .min(8, "Password must be at least 8 characters long")
   .max(24, "Password cannot be more than 24 characters")
   .regex(
