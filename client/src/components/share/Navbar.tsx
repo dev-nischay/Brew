@@ -30,7 +30,7 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="  flex justify-between items-center   px-6 pb-20">
+    <div className="  flex justify-between items-center   px-6 pb-10">
       <div className="  ">
         <h1
           onClick={() => nav("/")}
@@ -39,7 +39,7 @@ export const Navbar = () => {
           Brew
         </h1>
       </div>
-      <div className=" flex gap-16  text-lg">
+      <div className=" hidden md:flex gap-16  text-lg">
         {links.map((e, index) => (
           <a
             key={index}

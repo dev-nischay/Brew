@@ -1,11 +1,11 @@
-type CartProps = {
-  count?: number;
-};
-
+import { useNavigate } from "react-router-dom";
+import type { CartProps } from "./share.types";
 export const Cart = ({ count = 0 }: CartProps) => {
+  const nav = useNavigate();
   const display = count > 99 ? "99+" : String(count);
   return (
     <button
+      onClick={() => nav("/home/payments")}
       aria-label="Open cart"
       className="h-8 w-8  bg-background relative rounded-md flex items-center justify-center p-[0.4rem]"
     >
