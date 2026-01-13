@@ -2,19 +2,12 @@ import type { Request, Response, NextFunction } from "express";
 import { Product } from "../../modals/product.js";
 import AppError from "../../utils/AppError.js";
 import { HttpStatus } from "../../types/enums.js";
-import type {
-  purchaseBody,
-  reviewBody,
-} from "../../validation/productSchema.js";
+import type { purchaseBody, reviewBody } from "../../validation/productSchema.js";
 import { Purchase } from "../../modals/purchases.js";
 import { Feedback } from "../../modals/review.js";
 import { Types } from "mongoose";
 
-export const availableProducts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const availableProducts = async (req: Request, res: Response, next: NextFunction) => {
   const products = await Product.find()
     .populate({
       path: "seller",
@@ -22,15 +15,8 @@ export const availableProducts = async (
     })
     .select("-__v -images._id");
 
-  console.log(products);
-
   if (products.length === 0)
-    next(
-      new AppError(
-        "Sorry ! no produts listed at this moment please try again later",
-        HttpStatus.NotFound
-      )
-    );
+    next(new AppError("Sorry ! no produts listed at this moment please try again later", HttpStatus.NotFound));
 
   res.json({
     status: true,
@@ -39,11 +25,7 @@ export const availableProducts = async (
   });
 };
 
-export const purchaseProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const purchaseProduct = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.token.id;
   const { items, totalAmount } = req.validatedBody as purchaseBody;
 
@@ -51,10 +33,7 @@ export const purchaseProduct = async (
 
   const products = await Product.find({ _id: { $in: productIds } });
 
-  if (!products)
-    return next(
-      new AppError("Prodcuts not found try again later", HttpStatus.NotFound)
-    );
+  if (!products) return next(new AppError("Prodcuts not found try again later", HttpStatus.NotFound));
 
   await Purchase.create({
     userId,
@@ -68,11 +47,7 @@ export const purchaseProduct = async (
   });
 };
 
-export const reviewProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const reviewProduct = async (req: Request, res: Response, next: NextFunction) => {
   const { review } = req.validatedBody as reviewBody;
   const userId = req.token.id;
   const productString = req.validatedParams?.productId;
@@ -90,11 +65,7 @@ export const reviewProduct = async (
   });
 };
 
-export const purchaseHistory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const purchaseHistory = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.token.id;
 
   const purchases = await Purchase.find({ userId })
@@ -106,8 +77,7 @@ export const purchaseHistory = async (
     })
     .select("-__v totalAmount items -_id -purchasedAt -images._id");
 
-  if (!purchases)
-    return next(new AppError("no purchases to display", HttpStatus.BadRequest));
+  if (!purchases) return next(new AppError("no purchases to display", HttpStatus.BadRequest));
 
   res.json({
     status: true,
