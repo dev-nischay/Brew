@@ -7,7 +7,7 @@ export const usePurchaseStore = create(
     (set) => ({
       purchases: [],
       totalAmount: 0,
-      setPurchases: (purchasesArr) => set({ purchases: purchasesArr }),
+      setPurchases: (purchasesArr,totalAmount) => set({ purchases: purchasesArr ,totalAmount}),
     }),
     {
       name: "purchases",
