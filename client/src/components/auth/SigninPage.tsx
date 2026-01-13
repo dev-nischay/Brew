@@ -15,12 +15,7 @@ export const SignIn = () => {
     username,
     password,
   };
-  const { error, loading, request } = useFetch(
-    "signin",
-    "POST",
-    { requireAuth: false },
-    { ...body }
-  );
+  const { error, loading, request } = useFetch("signin", "POST", { requireAuth: false }, { ...body });
 
   const inputArr = [
     {
@@ -43,7 +38,7 @@ export const SignIn = () => {
       if (data.token !== undefined) {
         setToken!(data.token);
         setUser!(username);
-        nav("/products/home");
+        nav("/home/products");
       }
       console.log(data.message);
       alert(data.message);
@@ -52,9 +47,7 @@ export const SignIn = () => {
   return (
     <div className="ml-24">
       <div className="w-[25rem] h-[32rem] bg-background rounded-lg">
-        <h1 className="text-foreground text-3xl font-bold flex justify-center p-4">
-          Sign in
-        </h1>
+        <h1 className="text-foreground text-3xl font-bold flex justify-center p-4">Sign in</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-12  items-center p-6 ">
             {inputArr.map((e, index) => (
@@ -66,9 +59,7 @@ export const SignIn = () => {
                   error={error ? "Invalid Input" : undefined}
                 />
                 {error instanceof Error && (
-                  <div className="absolute right-2 -bottom-8 text-red-500 ">
-                    {error?.message}
-                  </div>
+                  <div className="absolute right-2 -bottom-8 text-red-500 ">{error?.message}</div>
                 )}
               </div>
             ))}
